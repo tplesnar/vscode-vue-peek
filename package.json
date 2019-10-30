@@ -1,9 +1,9 @@
 {
-  "name": "vue-peek",
-  "displayName": "Vue Peek",
-  "description": "Allows peek and goto definition for Vue single-file components.",
+  "name": "vue-peek-base-components",
+  "displayName": "Vue Peek with base components",
+  "description": "Allows peek and goto definition for Vue single-file components. Forked from @fuzinato allows to peak into _base-[component] as encouraged by @chrisvfritz in vue-enterprise-boilerplate",
   "version": "1.0.2",
-  "publisher": "dariofuzinato",
+  "publisher": "tplesnar",
   "icon": "images/vue-peek-icon.png",
   "license": "MIT",
   "keywords": [
@@ -14,10 +14,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/fussinatto/vscode-vue-peek"
+    "url": "https://github.com/tplesnar/vscode-vue-peek"
   },
   "bugs": {
-    "url": "https://github.com/fussinatto/vscode-vue-peek/issues"
+    "url": "https://github.com/tplesnar/vscode-vue-peek/issues"
   },
   "engines": {
     "vscode": "^1.14.0"
