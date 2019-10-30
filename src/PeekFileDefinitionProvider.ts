@@ -19,10 +19,16 @@ export default class PeekFileDefinitionProvider implements vscode.DefinitionProv
     })
 
     this.targetFileExtensions.forEach(ext => {
-      possibleFileNames.push(selectedText + ext)
-      possibleFileNames.push(selectedText + '/index' + ext)
-      possibleFileNames.push(altName + ext)
-      possibleFileNames.push(altName + '/index' + ext)
+      if (selectedText.match(/^Base+\w/)) {
+        let basePotentialName = "_base-" + selectedText.substr(4, 1).toLowerCase() + selectedText.substr(5)
+        possibleFileNames.push(basePotentialName + ext)
+        possibleFileNames.push(basePotentialName + '/index' + ext)
+      } else {
+        possibleFileNames.push(selectedText + ext)
+        possibleFileNames.push(selectedText + '/index' + ext)
+        possibleFileNames.push(altName + ext)
+        possibleFileNames.push(altName + '/index' + ext)
+      }
     })
 
     return possibleFileNames;
@@ -37,19 +43,19 @@ export default class PeekFileDefinitionProvider implements vscode.DefinitionProv
     position: vscode.Position,
     token: vscode.CancellationToken
   ): Promise<vscode.Location | vscode.Location[]> {
-    
+
     let filePaths = [];
     const componentNames = this.getComponentName(position);
     const searchPathActions = componentNames.map(this.searchFilePath);
     const searchPromises = Promise.all(searchPathActions); // pass array of promises
-    
+
     return searchPromises.then((paths) => {
       filePaths = [].concat.apply([], paths);
-      
+
       if (filePaths.length) {
         let allPaths = [];
         filePaths.forEach(filePath => {
-          allPaths.push(new vscode.Location(vscode.Uri.file(`${filePath.path}`),new vscode.Position(0,1) ))
+          allPaths.push(new vscode.Location(vscode.Uri.file(`${filePath.path}`), new vscode.Position(0, 1)))
         });
         return allPaths;
       } else {
@@ -57,6 +63,6 @@ export default class PeekFileDefinitionProvider implements vscode.DefinitionProv
       }
     }, (reason) => {
       return undefined;
-    }); 
+    });
   }
 }
